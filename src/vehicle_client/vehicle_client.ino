@@ -2,99 +2,33 @@
 #include <ArduinoMqttClient.h>
 #include <WiFi.h>
 #include "MQTTController.h"
+#include "ComponentsController.h" 
 #include "constants.h"
 
 MqttController mqttController;
 
 void setup() {
-  //Set Up ESP32 Pins
-  SetUpPins();
+  //Set Up Components
+  SetUpComponents();
 
   //Begin Serial Connection
   Serial.begin(9600);
 
-  mqttController.start();
+  //mqttController.start();
 }
 
-void SetUpPins () {
-  //Bridge 1 pins 
-
-  pinMode(BRIDGE1_IN1, OUTPUT);
-  pinMode(BRIDGE1_IN2, OUTPUT);
-  pinMode(BRIDGE1_IN3, OUTPUT);
-  pinMode(BRIDGE1_IN4, OUTPUT);
-
-
-  //Test SetUp
-  pinMode(TEST_PIN25, OUTPUT);
-  pinMode(TEST_PIN26, INPUT);
-
-  digitalWrite(TEST_PIN26, LOW);
-
-  return;
-}
 
 void loop() 
 {
   //check broker
   mqttController.poll();
 
-
-  /* --- Test --- */
-  // Rotate the Motor A clockwise
-  digitalWrite(BRIDGE1_IN1, HIGH);
-  digitalWrite(BRIDGE1_IN2, LOW);
-  digitalWrite(BRIDGE1_IN3, HIGH);
-  digitalWrite(BRIDGE1_IN4, LOW);
-  delay(2000);
-  // Motor A
-  digitalWrite(BRIDGE1_IN1, HIGH);
-  digitalWrite(BRIDGE1_IN2, HIGH);
-  digitalWrite(BRIDGE1_IN3, HIGH);
-  digitalWrite(BRIDGE1_IN4, HIGH);
-  delay(500);
+  /* --- Ulta Sonic Sendor Test --- */
+  Serial.print("test: ");
+  Serial.println();
+  BC1.wheelGo(1, true);
   /* --- End Test --- */
 }
-
-/*
-void loop()
-{
-  digitalWrite(TEST_PIN26, LOW);
-  delay(2);
-  
-  digitalWrite(TEST_PIN26, HIGH);
-  delay(10);
-  digitalWrite(TEST_PIN26, LOW);
-  
-  float timing = pulseIn(TEST_PIN25, HIGH);
-  float distance = (timing * 0.034) / 2;
-  
-  Serial.print("Distance: ");
-  Serial.print(timing);
-  Serial.print("cm | ");
-  Serial.print(distance / 2.54);
-  Serial.println("in");
-  
-  delay(100);
-}
-*/
-
-/*
-void loop() {
-  // Rotate the Motor A clockwise
-  digitalWrite(BRIDGE1_IN1, HIGH);
-  digitalWrite(BRIDGE1_IN2, LOW);
-  digitalWrite(BRIDGE1_IN3, HIGH);
-  digitalWrite(BRIDGE1_IN4, LOW);
-  delay(2000);
-  // Motor A
-  digitalWrite(BRIDGE1_IN1, HIGH);
-  digitalWrite(BRIDGE1_IN2, HIGH);
-  digitalWrite(BRIDGE1_IN3, HIGH);
-  digitalWrite(BRIDGE1_IN4, HIGH);
-  delay(500);
-}
-*/
 
 /*
 #include <tcs3200.h>

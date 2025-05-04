@@ -1,6 +1,3 @@
-#include "Arduino.h"
-#include <ArduinoMqttClient.h>
-#include <WiFi.h>
 #include <MQTTController.h>
 
 WiFiClient wifiClient;
@@ -33,6 +30,7 @@ void MqttController::poll () {
 void StartWifiConnection() {
   Serial.println("Connecting to ");
   Serial.print(WIFI_SSID);
+  Serial.println("");
 
   while (WiFi.begin(WIFI_SSID, WIFI_PASS) != WL_CONNECTED) {
     Serial.println("Retrying Connection.");
