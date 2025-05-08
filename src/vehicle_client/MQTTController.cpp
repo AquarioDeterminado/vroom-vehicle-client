@@ -28,13 +28,16 @@ void MqttController::poll () {
 }
 
 void StartWifiConnection() {
-  Serial.println("Connecting to ");
+  WiFi.mode(WIFI_STA);
+  Serial.println("Connecting to: ");
   Serial.print(WIFI_SSID);
-  Serial.println("");
+  Serial.println();
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
 
-  while (WiFi.begin(WIFI_SSID, WIFI_PASS) != WL_CONNECTED) {
-    Serial.println("Retrying Connection.");
-    delay(5000);
+  while (WiFi.status() != WL_CONNECTED) {
+    // failed, retry
+    Serial.print(".");
+    delay(100);
   }
   
   Serial.println("Connected to Network.");
@@ -42,9 +45,7 @@ void StartWifiConnection() {
 }
 
 void ConnectMQQTBroker() {
-  char buffer[17];
-  strncpy_P(buffer, (const char*)MQTT_SERVER_HOST, 16);
-  if (!mqttClient.connect(buffer, MQTT_SERVER_PORT)) {
+  if (!mqttClient.connect((char*)MQTT_SERVER_HOST, MQTT_SERVER_PORT)) {
     Serial.print("MQTT connection failed! Error code = ");
     Serial.println(mqttClient.connectError());
 
@@ -54,31 +55,42 @@ void ConnectMQQTBroker() {
   Serial.println();
 }
 
-
 void SubscribeTopics() {
   mqttClient.subscribe(MQTT_TOPIC_BATTERY);
   mqttClient.subscribe(MQTT_TOPIC_SPEED);
   mqttClient.subscribe(MQTT_TOPIC_INCLINATION);
   mqttClient.subscribe(MQTT_TOPIC_TRIPS);
   mqttClient.subscribe(MQTT_TOPIC_MOVEMENT);
-  mqttClient.subscribe(MQTT_TOPIC_PRESETACTION);
+  mqttClient.subscribe(MQTT_TOPIC_ACTION);
 }
 
-void onMqttMessage(int messageSize) 
-{
-  String topic = mqttClient.messageTopic();
+String MqttController::messageTopic() {
+  return mqttClient.messageTopic();
+}
 
-  while (mqttClient.available()) {
-    Serial.print((char)mqttClient.read());
+char* MqttController::getIncomingMessage(int messageSize) {
+  char* message = (char*) malloc(sizeof(char) * messageSize);
+  int currentChar = 0;
+  char c;
+  Serial.println("Reading Message: ");
+
+  while (currentChar <= messageSize) {
+    c = (char) mqttClient.read();
+    if(c == ';')
+      break;
+    else {
+      message[currentChar] = c;
+      currentChar ++;
+    }
   }
-  Serial.println();
+  message[messageSize - 1] = 0;
 
-  if (topic == MQTT_TOPIC_BATTERY) {}
-  else if (topic == MQTT_TOPIC_SPEED) {}
-  else if (topic == MQTT_TOPIC_INCLINATION) {}
-  else if (topic == MQTT_TOPIC_TRIPS) {}
-  else if (topic == MQTT_TOPIC_MOVEMENT) {}
-  else if (topic == MQTT_TOPIC_PRESETACTION) {}
+  return message;
 }
+
+void MqttController::setCallBack(void (*callBack)(int)) {
+  mqttClient.onMessage(callBack);
+}
+
 
 

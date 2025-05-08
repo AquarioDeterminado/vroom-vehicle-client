@@ -5,6 +5,7 @@
 
 class BridgeController {
   public:
+    BridgeController();
     BridgeController(int wheel1FowardPin, int wheel1BackPin, int wheel1VelocityPin, int wheel2FowardPin, int wheel2BackPin, int wheel2VelocityPin);
     void setUp();
     void wheelGo(int wheelNumber, bool goFoward);

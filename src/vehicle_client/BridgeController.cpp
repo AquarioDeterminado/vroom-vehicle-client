@@ -1,5 +1,9 @@
 #include "BridgeController.h"
 
+BridgeController::BridgeController () {
+  
+}
+
 BridgeController::BridgeController(int wheel1FowardPin, int wheel1BackPin, int wheel1VelocityPin, int wheel2FowardPin, int wheel2BackPin, int wheel2VelocityPin) {
   _wheel1FowardPin = wheel1FowardPin;
   _wheel1BackPin = wheel1BackPin;

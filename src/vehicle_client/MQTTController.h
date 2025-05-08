@@ -4,6 +4,7 @@
 #include "Arduino.h"
 #include <ArduinoMqttClient.h>
 #include <WiFi.h>
+#include <stdlib.h>
 #include "constants.h"
 
 class MqttController
@@ -13,8 +14,10 @@ class MqttController
     void start();
     void sendMessage(char * topic, int value);
     void poll();
+    String messageTopic();
+    char* getIncomingMessage(int messageSize);
+    void setCallBack(void (*callBack)(int));
   private:
-    
 };
 
 #endif
