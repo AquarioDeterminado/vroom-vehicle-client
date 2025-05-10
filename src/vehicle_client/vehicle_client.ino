@@ -18,8 +18,8 @@ void setup() {
   //Begin Serial Connection
   Serial.begin(9600);
 
-  mqttController.start();
   mqttController.setCallBack(onMqttMessage);
+  mqttController.start();
 }
 
 void loop() 
