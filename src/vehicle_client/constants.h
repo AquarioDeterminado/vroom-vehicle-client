@@ -36,8 +36,8 @@
 /* --- END ESP32-1 PINS --- */
 
 //WIFI Config
-#define WIFI_SSID F("hi-five")
-#define WIFI_PASS F("zyskiw-zinxa8-dyjbUp")
+#define WIFI_SSID F("")
+#define WIFI_PASS F("")
 
 //MQTT Config
 #define MQTT_SERVER_HOST F("192.168.10.79")
