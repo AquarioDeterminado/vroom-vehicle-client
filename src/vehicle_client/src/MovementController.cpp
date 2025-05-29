@@ -15,15 +15,19 @@ void MovementController::move(Direction direction, float speed) {
 
   switch(direction) {
     case Direction::FOWARD:
+      Serial.println("Going Foward;");
       goVertical(true);
       break;
     case Direction::BACK:
+      Serial.println("Going Backwards;");
       goVertical(false);
       break;
     case Direction::RIGHT:
+      Serial.println("Going Right;");
       goHorizontal(true);
       break;
     case Direction::LEFT:
+      Serial.println("Going Left;");
       goHorizontal(false);
       break;
     case Direction::FOWARD_RIGTH:

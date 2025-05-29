@@ -19,13 +19,13 @@ void SelfDriveController::setCurrentTripId(char* currentTripID) {
 
 void SelfDriveController::loop() {
   //Checks Rotations change
-  rotateUpdater();
+  //rotateUpdater();
 
   //Make Checks
   checkIfError(ErrorType::DISTANCE);
   checkIfError(ErrorType::LINE);
-  checkIfError(ErrorType::RAMP);
-  checkIfError(ErrorType::ROTATION);
+  //checkIfError(ErrorType::RAMP);
+  //checkIfError(ErrorType::ROTATION);
 
   handleErrors();
   
@@ -70,7 +70,6 @@ bool SelfDriveController::getErrorChecker(ErrorType error) {
       return this->isFacingFoward();
       break;
   }
-
 }
 
 //HANDLE ERROR
@@ -110,6 +109,10 @@ void SelfDriveController::crabWalk() { //TODO: CHANGE
 
 bool SelfDriveController::hasDistance(){
   float distance = _componentsController->getUSS()->getDistance();
+  Serial.print("distance: ");
+  Serial.print(distance);
+  Serial.println("cm;");
+  
   if(distance >= maximumDistance)
     return true;
   else 
@@ -146,7 +149,6 @@ void SelfDriveController::inverse() {
 
 bool SelfDriveController::isOnLine() {
   int isOnLine = digitalRead(26); //TODO CHANGE
-  Serial.println(isOnLine);
   return isOnLine;
 }
 /* --- End Check --- */

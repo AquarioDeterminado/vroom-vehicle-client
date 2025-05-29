@@ -29,17 +29,6 @@ void BridgeController::wheelGo(int wheelNumber, bool goFoward) {
   //Reset Wheel
   this->wheelStop(wheelNumber);
 
-  Serial.println("moving wheel: ");
-  Serial.print(wheelNumber);
-  Serial.println("pin numbers: ");
-  Serial.print(_wheel1FowardPin);
-  Serial.print("; ");
-  Serial.print(_wheel1BackPin);
-  Serial.print("; ");
-  Serial.print(_wheel2FowardPin);
-  Serial.print("; ");
-  Serial.print(_wheel2BackPin);
-  Serial.print("; ");
   if (wheelNumber == 1) {
     if (goFoward)
       digitalWrite(_wheel1FowardPin, HIGH);

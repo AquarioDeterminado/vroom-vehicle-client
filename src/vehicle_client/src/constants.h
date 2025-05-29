@@ -30,11 +30,11 @@
 /* --- END ESP32-1 PINS --- */
 
 //WIFI Config
-#define WIFI_SSID F("Visitors")
-#define WIFI_PASS F("")
+#define WIFI_SSID F("hi-five")
+#define WIFI_PASS F("zyskiw-zinxa8-dyjbUp")
 
 //MQTT Config
-#define MQTT_SERVER_HOST F("10.36.248.48")
+#define MQTT_SERVER_HOST F("192.168.10.79")
 #define MQTT_SERVER_PORT 1883
 
 //MQTT Topics 
